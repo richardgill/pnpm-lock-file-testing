@@ -5,7 +5,7 @@ log_package_files() {
     jq -c '.dependencies.react' package.json | sed 's/^/  react: /'
     echo ""
     echo "🔒 pnpm-lock.yaml:"
-    echo "  React version: $(grep -A1 'react:' pnpm-lock.yaml | grep 'version:' | head -1 | awk '{print $2}')"
+    grep -A2 -B2 'react:' pnpm-lock.yaml | grep -E '(dependencies:|react:|specifier:|version:)' | sed 's/^/  /'
     echo ""
 }
 
@@ -13,6 +13,7 @@ get_react_version() {
     local package_path="$(pwd)/node_modules/react/package.json"
     local version=$(jq -r '.version' "$package_path")
     echo "✅ Installed: React $version"
+    echo "   Path: $package_path (\"verson\" property)"
 }
 
 show_git_diff() {
