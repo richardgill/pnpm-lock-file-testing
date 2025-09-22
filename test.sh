@@ -15,6 +15,11 @@ get_react_version() {
     echo "React version: $version (from $package_path)"
 }
 
+show_git_diff() {
+    echo "git diff:"
+    git diff
+}
+
 echo "Available React 19 versions:"
 pnpm view react versions --json | jq -r '.[]' | grep '^19\.' | grep -v canary | grep -v rc | grep -v beta | grep -v alpha
 echo ""
@@ -31,7 +36,7 @@ echo ""
 echo "After pnpm install:"
 log_package_files
 get_react_version
-git diff
+show_git_diff
 
 echo ""
 echo "----------"
@@ -46,7 +51,7 @@ echo ""
 echo "After fresh install:"
 log_package_files
 get_react_version
-git diff
+show_git_diff
 
 echo ""
 echo "----------"
@@ -62,7 +67,7 @@ echo ""
 echo "After clean install:"
 log_package_files
 get_react_version
-git diff
+show_git_diff
 
 echo ""
 echo "----------"
@@ -78,4 +83,4 @@ echo ""
 echo "After install with restored lock:"
 log_package_files
 get_react_version
-git diff
+show_git_diff
