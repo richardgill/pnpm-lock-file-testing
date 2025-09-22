@@ -4,7 +4,8 @@ log_package_files() {
     echo "📦 package.json:"
     jq -c '.dependencies.react' package.json | sed 's/^/  react: /'
     echo ""
-    echo "🔒 pnpm-lock.yaml:"
+    local lock_version=$(grep -A1 'react:' pnpm-lock.yaml | grep 'version:' | head -1 | awk '{print $2}')
+    echo "🔒 pnpm-lock.yaml: version $lock_version"
     grep -A2 -B2 'react:' pnpm-lock.yaml | grep -E '(dependencies:|react:|specifier:|version:)' | sed 's/^/  /'
     echo ""
 }
@@ -25,6 +26,40 @@ show_git_diff() {
     fi
 }
 
+test() {
+    local test_name="$1"
+    local setup_action="$2"
+
+    echo ""
+    echo "=========================================="
+    echo "$test_name"
+
+    if [ -n "$setup_action" ]; then
+        echo "Action: $setup_action"
+        eval "$setup_action"
+    fi
+
+    echo ""
+    echo "Before install:"
+    log_package_files
+    get_react_version
+
+    pnpm install
+
+    echo ""
+    echo "After install:"
+    log_package_files
+    get_react_version
+    show_git_diff
+
+    # Restore git state
+    echo ""
+    echo "🔄 Restoring git state..."
+    git checkout -- .
+    rm -rf node_modules
+    pnpm install --silent
+}
+
 echo "🔍 Available React 19 versions:"
 pnpm view react versions --json | jq -r '.[]' | grep '^19\.' | grep -v canary | grep -v rc | grep -v beta | grep -v alpha | sed 's/^/  /'
 echo ""
@@ -33,57 +68,11 @@ echo "📊 INITIAL STATE:"
 log_package_files
 get_react_version
 
-echo ""
-echo "=========================================="
-echo "TEST 1: Running pnpm install..."
-pnpm install
+# Run tests
+test "TEST 1: Regular pnpm install"
 
-echo ""
-echo "Result:"
-log_package_files
-get_react_version
-show_git_diff
+test "TEST 2: Remove lock file & reinstall" "rm pnpm-lock.yaml"
 
-echo ""
-echo "=========================================="
-echo "TEST 2: Remove lock file & reinstall"
-echo "Action: rm pnpm-lock.yaml"
-rm pnpm-lock.yaml
+test "TEST 3: Clean install (no lock, no node_modules)" "rm pnpm-lock.yaml && rm -rf node_modules"
 
-pnpm install
-
-echo ""
-echo "Result:"
-log_package_files
-get_react_version
-show_git_diff
-
-echo ""
-echo "=========================================="
-echo "TEST 3: Clean install (no lock, no node_modules)"
-echo "Action: rm pnpm-lock.yaml && rm -rf node_modules"
-rm pnpm-lock.yaml
-rm -rf node_modules
-
-pnpm install
-
-echo ""
-echo "Result:"
-log_package_files
-get_react_version
-show_git_diff
-
-echo ""
-echo "=========================================="
-echo "TEST 4: Restore lock from git, fresh node_modules"
-echo "Action: git checkout pnpm-lock.yaml && rm -rf node_modules"
-git checkout pnpm-lock.yaml
-rm -rf node_modules
-
-pnpm install
-
-echo ""
-echo "Result:"
-log_package_files
-get_react_version
-show_git_diff
+test "TEST 4: Restore lock from git, fresh node_modules" "git checkout pnpm-lock.yaml && rm -rf node_modules"
