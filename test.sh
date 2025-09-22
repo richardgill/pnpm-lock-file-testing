@@ -27,12 +27,18 @@ get_react_version() {
 }
 
 show_git_diff() {
-    if [ -z "$(git status --porcelain)" ]; then
+    # Stage all changes to see them in diff
+    git add . 2>/dev/null
+
+    if git diff --cached --quiet; then
         echo "📋 Git status: No changes"
     else
-        echo "📋 Git changes:"
-        git status --short
+        echo "📋 Git diff detected changes:"
+        git diff --cached --stat
     fi
+
+    # Unstage all changes
+    git reset --quiet
 }
 
 test() {
