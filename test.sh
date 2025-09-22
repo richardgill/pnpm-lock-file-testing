@@ -1,59 +1,45 @@
 #!/bin/bash
 
-# Function to log package files
 log_package_files() {
-    echo "=== package.json contents ==="
+    echo "package.json:"
     cat package.json
     echo ""
-
-    echo "=== pnpm-lock.yaml contents ==="
+    echo "pnpm-lock.yaml:"
     cat pnpm-lock.yaml
     echo ""
 }
 
-# Display package files
-log_package_files
-
-# Function to get React version from node_modules
 get_react_version() {
     local package_path="$(pwd)/node_modules/react/package.json"
     local version=$(jq -r '.version' "$package_path")
-    echo "React version: $version"
-    echo "Found at: $package_path in \"version\" field"
+    echo "React version: $version (from $package_path)"
 }
 
-# List stable React versions starting with 19
-echo "=== Stable React versions starting with 19 ==="
+echo "Available React 19 versions:"
 pnpm view react versions --json | jq -r '.[]' | grep '^19\.' | grep -v canary | grep -v rc | grep -v beta | grep -v alpha
-
 echo ""
 
-# Call the function
-echo "=== Installed React version ==="
+log_package_files
 get_react_version
 
 echo ""
-echo "=== Running pnpm install ==="
+echo "Running pnpm install..."
 pnpm install
 
 echo ""
-echo "=== After pnpm install ==="
+echo "After pnpm install:"
 log_package_files
-
-echo "=== Installed React version after pnpm install ==="
 get_react_version
 
 echo ""
-echo "=== Removing pnpm-lock.yaml ==="
+echo "Removing pnpm-lock.yaml..."
 rm pnpm-lock.yaml
 
 echo ""
-echo "=== Running pnpm install (without lock file) ==="
+echo "Running pnpm install without lock file..."
 pnpm install
 
 echo ""
-echo "=== After pnpm install without lock file ==="
+echo "After fresh install:"
 log_package_files
-
-echo "=== Installed React version after fresh install ==="
 get_react_version
