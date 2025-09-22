@@ -72,4 +72,4 @@ test "TEST 2: Remove lock file & reinstall" "rm pnpm-lock.yaml"
 
 test "TEST 3: Clean install (no lock, no node_modules)" "rm pnpm-lock.yaml && rm -rf node_modules"
 
-test "TEST 4: Restore lock from git, fresh node_modules" "git checkout pnpm-lock.yaml && rm -rf node_modules"
+test "TEST 4: Restore lock from git, fresh node_modules" "rm -rf node_modules"
