@@ -44,6 +44,8 @@ test() {
     log_package_files
     get_react_version
 
+    echo ""
+    echo "Running: pnpm install"
     pnpm install
 
     echo ""
