@@ -43,3 +43,31 @@ echo ""
 echo "After fresh install:"
 log_package_files
 get_react_version
+
+echo ""
+echo "Removing pnpm-lock.yaml and node_modules..."
+rm pnpm-lock.yaml
+rm -rf node_modules
+
+echo ""
+echo "Running pnpm install from scratch..."
+pnpm install
+
+echo ""
+echo "After clean install:"
+log_package_files
+get_react_version
+
+echo ""
+echo "Restoring pnpm-lock.yaml from git and removing node_modules..."
+git checkout pnpm-lock.yaml
+rm -rf node_modules
+
+echo ""
+echo "Running pnpm install with restored lock file..."
+pnpm install
+
+echo ""
+echo "After install with restored lock:"
+log_package_files
+get_react_version
