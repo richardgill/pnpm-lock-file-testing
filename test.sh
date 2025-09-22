@@ -27,11 +27,11 @@ get_react_version() {
 }
 
 show_git_diff() {
-    if git diff --quiet; then
+    if [ -z "$(git status --porcelain)" ]; then
         echo "📋 Git status: No changes"
     else
-        echo "📋 Git diff detected changes:"
-        git diff --stat
+        echo "📋 Git changes:"
+        git status --short
     fi
 }
 
