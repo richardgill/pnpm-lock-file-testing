@@ -30,6 +30,7 @@ echo ""
 echo "After pnpm install:"
 log_package_files
 get_react_version
+git diff
 
 echo ""
 echo "Removing pnpm-lock.yaml..."
@@ -43,6 +44,7 @@ echo ""
 echo "After fresh install:"
 log_package_files
 get_react_version
+git diff
 
 echo ""
 echo "Removing pnpm-lock.yaml and node_modules..."
@@ -57,6 +59,7 @@ echo ""
 echo "After clean install:"
 log_package_files
 get_react_version
+git diff
 
 echo ""
 echo "Restoring pnpm-lock.yaml from git and removing node_modules..."
@@ -71,3 +74,4 @@ echo ""
 echo "After install with restored lock:"
 log_package_files
 get_react_version
+git diff
