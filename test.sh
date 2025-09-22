@@ -62,11 +62,6 @@ test() {
 
 echo "🔍 Available React 19 versions:"
 pnpm view react versions --json | jq -r '.[]' | grep '^19\.' | grep -v canary | grep -v rc | grep -v beta | grep -v alpha | sed 's/^/  /'
-echo ""
-
-echo "📊 INITIAL STATE:"
-log_package_files
-get_react_version
 
 # Run tests
 test "TEST 1: Regular pnpm install"
