@@ -1,6 +1,6 @@
 # pnpm Lock File Testing
 
-Testing pnpm lock file behavior with React versions.
+Testing pnpm lock file behavior for ^ carets.
 
 node_modules is intentionally checked in to make it easier to verify what versions are installed and revert changes during testing.
 
