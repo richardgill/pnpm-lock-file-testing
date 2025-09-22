@@ -23,6 +23,7 @@ log_package_files
 get_react_version
 
 echo ""
+echo "----------"
 echo "Running pnpm install..."
 pnpm install
 
@@ -33,6 +34,7 @@ get_react_version
 git diff
 
 echo ""
+echo "----------"
 echo "Removing pnpm-lock.yaml..."
 rm pnpm-lock.yaml
 
@@ -47,6 +49,7 @@ get_react_version
 git diff
 
 echo ""
+echo "----------"
 echo "Removing pnpm-lock.yaml and node_modules..."
 rm pnpm-lock.yaml
 rm -rf node_modules
@@ -62,6 +65,7 @@ get_react_version
 git diff
 
 echo ""
+echo "----------"
 echo "Restoring pnpm-lock.yaml from git and removing node_modules..."
 git checkout pnpm-lock.yaml
 rm -rf node_modules
