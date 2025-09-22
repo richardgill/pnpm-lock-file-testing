@@ -4,17 +4,26 @@ log_package_files() {
     echo "📦 package.json:"
     jq -c '.dependencies.react' package.json | sed 's/^/  react: /'
     echo ""
-    local lock_version=$(grep -A1 'react:' pnpm-lock.yaml | grep 'version:' | head -1 | awk '{print $2}')
-    echo "🔒 pnpm-lock.yaml: version $lock_version"
-    grep -A2 -B2 'react:' pnpm-lock.yaml | grep -E '(dependencies:|react:|specifier:|version:)' | sed 's/^/  /'
+
+    if [ -f pnpm-lock.yaml ]; then
+        local lock_version=$(grep -A1 'react:' pnpm-lock.yaml | grep 'version:' | head -1 | awk '{print $2}')
+        echo "🔒 pnpm-lock.yaml: version $lock_version"
+        grep -A2 -B2 'react:' pnpm-lock.yaml | grep -E '(dependencies:|react:|specifier:|version:)' | sed 's/^/  /'
+    else
+        echo "🔒 pnpm-lock.yaml: deleted"
+    fi
     echo ""
 }
 
 get_react_version() {
     local package_path="$(pwd)/node_modules/react/package.json"
-    local version=$(jq -r '.version' "$package_path")
-    echo "✅ Installed: React $version"
-    echo "   Path: $package_path (\"verson\" property)"
+    if [ -f "$package_path" ]; then
+        local version=$(jq -r '.version' "$package_path")
+        echo "✅ Installed: React $version"
+        echo "   Path: $package_path (\"version\" property)"
+    else
+        echo "✅ Installed: node_modules deleted"
+    fi
 }
 
 show_git_diff() {
