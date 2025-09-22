@@ -1,0 +1,199 @@
+🔍 Available React 19 versions:
+  19.0.0
+  19.1.0
+  19.1.1
+
+==========================================
+TEST 1: Regular pnpm install
+
+Before install:
+📦 package.json:
+  react: "^19.1.0"
+
+🔒 pnpm-lock.yaml: version 
+      dependencies:
+        react:
+          specifier: ^19.1.0
+          version: 19.1.0
+
+✅ Installed: React 19.1.0
+   Path: /Users/rich/code/xata/lockfile-testing/node_modules/react/package.json ("version" property)
+
+Running: pnpm install
+Lockfile is up to date, resolution step is skipped
+Already up to date
+
+Done in 192ms using pnpm v10.17.0
+
+After install:
+📦 package.json:
+  react: "^19.1.0"
+
+🔒 pnpm-lock.yaml: version 
+      dependencies:
+        react:
+          specifier: ^19.1.0
+          version: 19.1.0
+
+✅ Installed: React 19.1.0
+   Path: /Users/rich/code/xata/lockfile-testing/node_modules/react/package.json ("version" property)
+📋 Git diff detected changes:
+ output.log | 39 +++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 39 insertions(+)
+
+🔄 Restoring git state...
+
+==========================================
+TEST 2: Remove lock file & reinstall
+Action: rm pnpm-lock.yaml
+
+Before install:
+📦 package.json:
+  react: "^19.1.0"
+
+🔒 pnpm-lock.yaml: deleted
+
+✅ Installed: React 19.1.0
+   Path: /Users/rich/code/xata/lockfile-testing/node_modules/react/package.json ("version" property)
+
+Running: pnpm install
+Progress: resolved 0, reused 1, downloaded 0, added 0
+Already up to date
+Progress: resolved 1, reused 1, downloaded 0, added 0, done
+
+Done in 200ms using pnpm v10.17.0
+
+After install:
+📦 package.json:
+  react: "^19.1.0"
+
+🔒 pnpm-lock.yaml: version 
+      dependencies:
+        react:
+          specifier: ^19.1.0
+          version: 19.1.0
+
+✅ Installed: React 19.1.0
+   Path: /Users/rich/code/xata/lockfile-testing/node_modules/react/package.json ("version" property)
+📋 Git diff detected changes:
+ output.log | 77 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 77 insertions(+)
+
+🔄 Restoring git state...
+
+==========================================
+TEST 3: Clean install (no lock, no node_modules)
+Action: rm pnpm-lock.yaml && rm -rf node_modules
+
+Before install:
+📦 package.json:
+  react: "^19.1.0"
+
+🔒 pnpm-lock.yaml: deleted
+
+✅ Installed: node_modules deleted
+
+Running: pnpm install
+Progress: resolved 1, reused 0, downloaded 0, added 0
+Packages: +1
++
+Progress: resolved 1, reused 1, downloaded 0, added 1, done
+
+dependencies:
++ react 19.1.1
+
+Done in 333ms using pnpm v10.17.0
+
+After install:
+📦 package.json:
+  react: "^19.1.0"
+
+🔒 pnpm-lock.yaml: version 
+      dependencies:
+        react:
+          specifier: ^19.1.0
+          version: 19.1.1
+
+✅ Installed: React 19.1.1
+   Path: /Users/rich/code/xata/lockfile-testing/node_modules/react/package.json ("version" property)
+📋 Git diff detected changes:
+ node_modules/.pnpm/lock.yaml                       |   8 +-
+ .../node_modules/react/LICENSE                     |   0
+ .../node_modules/react/README.md                   |   0
+ .../cjs/react-compiler-runtime.development.js      |   0
+ .../react/cjs/react-compiler-runtime.production.js |   0
+ .../react/cjs/react-compiler-runtime.profiling.js  |   0
+ .../react/cjs/react-jsx-dev-runtime.development.js |   4 +-
+ .../react/cjs/react-jsx-dev-runtime.production.js  |   0
+ .../react/cjs/react-jsx-dev-runtime.profiling.js   |   0
+ ...act-jsx-dev-runtime.react-server.development.js |   4 +-
+ ...eact-jsx-dev-runtime.react-server.production.js |   0
+ .../react/cjs/react-jsx-runtime.development.js     |   4 +-
+ .../react/cjs/react-jsx-runtime.production.js      |   0
+ .../react/cjs/react-jsx-runtime.profiling.js       |   0
+ .../react-jsx-runtime.react-server.development.js  |   4 +-
+ .../react-jsx-runtime.react-server.production.js   |   0
+ .../node_modules/react/cjs/react.development.js    |  11 +-
+ .../node_modules/react/cjs/react.production.js     |   2 +-
+ .../react/cjs/react.react-server.development.js    |  12 ++-
+ .../react/cjs/react.react-server.production.js     |   2 +-
+ .../node_modules/react/compiler-runtime.js         |   0
+ .../node_modules/react/index.js                    |   0
+ .../node_modules/react/jsx-dev-runtime.js          |   0
+ .../react/jsx-dev-runtime.react-server.js          |   0
+ .../node_modules/react/jsx-runtime.js              |   0
+ .../node_modules/react/jsx-runtime.react-server.js |   0
+ .../node_modules/react/package.json                |   2 +-
+ .../node_modules/react/react.react-server.js       |   0
+ node_modules/react                                 |   2 +-
+ output.log                                         | 118 +++++++++++++++++++++
+ pnpm-lock.yaml                                     |   8 +-
+ 31 files changed, 151 insertions(+), 30 deletions(-)
+
+🔄 Restoring git state...
+
+==========================================
+TEST 4: Restore lock from git, fresh node_modules
+Action: rm -rf node_modules
+
+Before install:
+📦 package.json:
+  react: "^19.1.0"
+
+🔒 pnpm-lock.yaml: version 
+      dependencies:
+        react:
+          specifier: ^19.1.0
+          version: 19.1.0
+
+✅ Installed: node_modules deleted
+
+Running: pnpm install
+Lockfile is up to date, resolution step is skipped
+Progress: resolved 1, reused 0, downloaded 0, added 0
+Packages: +1
++
+Progress: resolved 1, reused 1, downloaded 0, added 1, done
+
+dependencies:
++ react 19.1.0
+
+Done in 196ms using pnpm v10.17.0
+
+After install:
+📦 package.json:
+  react: "^19.1.0"
+
+🔒 pnpm-lock.yaml: version 
+      dependencies:
+        react:
+          specifier: ^19.1.0
+          version: 19.1.0
+
+✅ Installed: React 19.1.0
+   Path: /Users/rich/code/xata/lockfile-testing/node_modules/react/package.json ("version" property)
+📋 Git diff detected changes:
+ output.log | 194 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 194 insertions(+)
+
+🔄 Restoring git state...
