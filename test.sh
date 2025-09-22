@@ -42,3 +42,18 @@ log_package_files
 
 echo "=== Installed React version after pnpm install ==="
 get_react_version
+
+echo ""
+echo "=== Removing pnpm-lock.yaml ==="
+rm pnpm-lock.yaml
+
+echo ""
+echo "=== Running pnpm install (without lock file) ==="
+pnpm install
+
+echo ""
+echo "=== After pnpm install without lock file ==="
+log_package_files
+
+echo "=== Installed React version after fresh install ==="
+get_react_version
